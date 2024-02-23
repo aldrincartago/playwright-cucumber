@@ -1,0 +1,29 @@
+node_modules/
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# dependencies
+node_modules
+**/node_modules
+
+# editors
+**/.idea
+**/.#*
+.vscode
+
+# yarn
+.yarn
+.yarnrc
+
+# npm
+.npmrc
+
+# productionq
+/build
+*.tgz
+*.tar
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
