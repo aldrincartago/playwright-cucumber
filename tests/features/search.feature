@@ -5,7 +5,7 @@ Feature: Check24 Main Page
     When I search for "PS5"
     Then I am on product result page
 
-  Scenario: Search for Product wp
+  Scenario: Search for Product wp (without pageobject)
     Given I open Check24 page wp
     When I search for "PS5" wp
     Then I am on product result page wp
