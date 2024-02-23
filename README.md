@@ -17,3 +17,7 @@ Feature: Check24 Main Page
     When I search for "PS5"
     Then I am on product result page
 ```
+
+### headless false
+the test will run headless,to see a browser change the value in the "globalHooks.js" to false
+`this.browser = await chromium.launch({ headless: false });`

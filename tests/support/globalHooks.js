@@ -3,7 +3,7 @@ const { Before, After, setWorldConstructor } = require('@cucumber/cucumber');
 
 class CustomWorld {
     async launchBrowser() {
-        this.browser = await chromium.launch({ headless: false });
+        this.browser = await chromium.launch({ headless: true });
         this.page = await this.browser.newPage();
         await this.page.setDefaultTimeout(60000);
     }
