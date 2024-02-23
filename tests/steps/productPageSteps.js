@@ -1,5 +1,5 @@
-const {Then} = require('@cucumber/cucumber');
-const {expect} = require("@playwright/test");
+const { Then} = require('@cucumber/cucumber');
+const { expect} = require("@playwright/test");
 
 const header = '.search-header';
 

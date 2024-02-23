@@ -1,4 +1,3 @@
-// globalHooks.js
 const { chromium } = require('@playwright/test');
 const { Before, After, setWorldConstructor } = require('@cucumber/cucumber');
 
