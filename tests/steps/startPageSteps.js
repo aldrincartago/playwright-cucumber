@@ -1,14 +1,12 @@
 const { Given, When} = require('@cucumber/cucumber');
-
-const acceptCookiesButton = '.c24-cookie-consent-notice-buttons .c24-cookie-consent-button:nth-child(2)';
-const searchField = 'input[name=\'q\']';
+const StartPage = require('../pageobjects/StartPage');
 
 Given('I open Check24 page', async function () {
-    await this.page.goto("https://www.check24.de/", { waitUntil: 'networkidle' });
-    await this.page.locator(acceptCookiesButton).click();
+    const startPage = new StartPage(this.page);
+    await startPage.open();
 });
 
 When('I search for {string}', async function (product) {
-    await this.page.locator(searchField).fill(product);
-    await this.page.locator(searchField).press('Enter');
+    const startPage = new StartPage(this.page);
+    await startPage.searchFor(product);
 });
