@@ -1,4 +1,3 @@
-// startPageSteps.js
 const { Given, When} = require('@cucumber/cucumber');
 
 const acceptCookiesButton = '.c24-cookie-consent-notice-buttons .c24-cookie-consent-button:nth-child(2)';
