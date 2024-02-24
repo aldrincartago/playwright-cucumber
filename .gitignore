@@ -19,12 +19,16 @@ node_modules
 # npm
 .npmrc
 
-# productionq
+# prod
 /build
 *.tgz
 *.tar
+*.webm
+*.zip
 /test-results/
 /reports/
+/traces/
+/videos/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
