@@ -12,7 +12,11 @@ class BrowserSetup {
     }
 
     async launchBrowser() {
-        this.browser = await chromium.launch({ headless: true });
+        this.browser = await chromium.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        });
+
         this.context = await this.browser.newContext({
             recordVideo: { dir: path.join(__dirname, '..', 'videos') }
         });
