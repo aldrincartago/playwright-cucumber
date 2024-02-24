@@ -16,5 +16,4 @@ let runner = [
   options,
 ].join(' ');
 
-
 module.exports = { runner }
