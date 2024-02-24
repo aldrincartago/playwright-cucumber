@@ -67,9 +67,6 @@ Before(async function() {
 });
 
 After(async function(scenario) {
-    console.log("********************************")
-    console.log(scenario.result.status)
-    console.log("********************************")
     await this.deleteVideosAndTracesIfTestPassed(scenario.result.status);
     await this.cleanupAfterTest();
 });
