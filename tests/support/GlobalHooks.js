@@ -1,7 +1,9 @@
 const { chromium } = require('@playwright/test');
-const { Before, After, setWorldConstructor } = require('@cucumber/cucumber');
+const { Before,After,setWorldConstructor, setDefaultTimeout } = require('@cucumber/cucumber');
 const fs = require('fs-extra');
 const path = require('path');
+
+setDefaultTimeout(30 * 1000);
 
 class BrowserSetup {
     constructor() {
@@ -24,7 +26,6 @@ class BrowserSetup {
         });
 
         this.page = await this.context.newPage();
-        this.page.setDefaultTimeout(60000);
     }
 
     async startTracing() {

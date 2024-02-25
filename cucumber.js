@@ -9,7 +9,6 @@ let options = [
   '--require tests/support/GlobalHooks.js', //to use the helper class
   '--format summary',
   '--format json:./test-results/reports/cucumber.json',
-  '--timeout 10000', // increase timeout for steps
 ].join(' ');
 
 let runner = [
