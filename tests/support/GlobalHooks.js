@@ -3,7 +3,7 @@ const { Before,After,setWorldConstructor, setDefaultTimeout } = require('@cucumb
 const fs = require('fs-extra');
 const path = require('path');
 
-setDefaultTimeout(30 * 1000);
+setDefaultTimeout(30 * 1000); // set timout for each step
 
 class BrowserSetup {
     constructor() {
