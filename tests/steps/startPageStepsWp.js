@@ -5,7 +5,7 @@ const searchField = 'input[name=\'q\']';
 const baseUrl = 'https://www.check24.de/'
 
 Given('I open Check24 page wp', async function () {
-    await this.page.goto(this.baseUrl, { waitUntil: 'networkidle' });
+    await this.page.goto(baseUrl, { waitUntil: 'networkidle' });
     await this.page.locator(acceptCookiesButton).click();
 
 });
