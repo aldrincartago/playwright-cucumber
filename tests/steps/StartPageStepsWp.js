@@ -14,3 +14,4 @@ When('I search for {string} wp', async function (product) {
     await this.page.locator(searchField).fill(product);
     await this.page.locator(searchField).press('Enter');
 });
+
