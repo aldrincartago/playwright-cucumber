@@ -25,6 +25,7 @@ node_modules
 *.tar
 *.webm
 *.zip
+*.png
 /test-results/
 /reports/
 /traces/
