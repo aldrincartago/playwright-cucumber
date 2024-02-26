@@ -4,48 +4,53 @@ const path = require('path');
 class ArtefactManager {
     constructor() {
         this.basePath = path.join(__dirname, '..', 'test-artefacts');
-        this.screenshotsDir = path.join(this.basePath, 'screenshots');
-        this.tracesDir = path.join(this.basePath, 'traces');
-        this.videosDir = path.join(this.basePath, 'videos');
+        this.screenshotsDirectory = path.join(this.basePath, 'screenshots');
+        this.tracesDirectory = path.join(this.basePath, 'traces');
+        this.videosDirectory = path.join(this.basePath, 'videos');
         this.pendingVideos = new Map();
 
-        fs.ensureDirSync(this.screenshotsDir);
-        fs.ensureDirSync(this.tracesDir);
-        fs.ensureDirSync(this.videosDir);
+        fs.ensureDirSync(this.screenshotsDirectory);
+        fs.ensureDirSync(this.tracesDirectory);
+        fs.ensureDirSync(this.videosDirectory);
     }
+
+    generateFilePath(dir, scenarioName, extension) {
+        const safeName = scenarioName.replace(/[^a-zA-Z0-9]/g, '_');
+        const timestamp = Date.now();
+        return path.join(dir, `${safeName}-${timestamp}${extension}`);
+    }
+
     async saveScreenshot(page, scenarioName) {
-        const screenshotPath = path.join(this.screenshotsDir, `${scenarioName.replace(/[^a-zA-Z0-9]/g, '_')}-${Date.now()}.png`);
+        const screenshotPath = this.generateFilePath(this.screenshotsDirectory, scenarioName, '.png');
         await page.screenshot({path: screenshotPath});
     }
 
     async saveTrace(context, scenarioName) {
-        const tracePath = path.join(this.tracesDir, `trace-${scenarioName.replace(/[^a-zA-Z0-9]/g, '_')}-${Date.now()}.zip`);
+        const tracePath = this.generateFilePath(this.tracesDirectory, scenarioName, '.zip');
         await context.tracing.stop({path: tracePath});
     }
 
     async registerVideo(page, scenarioName) {
         const video = page.video();
         if (video) {
-            video.path().then(videoPath => {
-                this.pendingVideos.set(scenarioName, videoPath);
-            });
+            video.path().then(videoPath => { this.pendingVideos.set(scenarioName, videoPath) });
         }
     }
 
-
     async handleVideoForFailedTest(result, scenarioName) {
         const videoPath = this.pendingVideos.get(scenarioName);
-        if (videoPath) {
-            if (result !== 'PASSED') {
-                // Verschiebe das Video in den korrekten Unterordner
-                const destPath = path.join(this.videosDir, `${scenarioName.replace(/[^a-zA-Z0-9]/g, '_')}-${Date.now()}.webm`);
-                await fs.move(videoPath, destPath).catch(e => console.error(`Fehler beim Verschieben des Videos: ${e}`));
-            } else {
-                // Lösche das Video, wenn der Test bestanden hat
-                await fs.unlink(videoPath).catch(e => console.error(`Fehler beim Löschen des Videos: ${e}`));
-            }
-            this.pendingVideos.delete(scenarioName);
+        if (!videoPath) {
+            return
         }
+
+        if (result !== 'PASSED') {
+            const destPath = this.generateFilePath(this.videosDirectory, scenarioName, '.webm');
+            await fs.move(videoPath, destPath).catch(async e => { console.error(`Error moving video: ${e}`) });
+        } else {
+            //delete video if test successful
+            await fs.unlink(videoPath).catch(e => console.error(`Error deleting video: ${e}`));
+        }
+        this.pendingVideos.delete(scenarioName);
     }
 }
 

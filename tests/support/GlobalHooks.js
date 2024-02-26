@@ -1,9 +1,8 @@
 const {chromium} = require('@playwright/test');
 const {Before, After, setWorldConstructor, setDefaultTimeout} = require('@cucumber/cucumber');
 const ArtefactManager = require('./ArtefactManager');
-const path = require('path');
 
-setDefaultTimeout(30 * 1000); // Setze Timeout für jeden Schritt
+setDefaultTimeout(30 * 1000); // time out for every steps
 
 class BrowserSetup {
     constructor() {
@@ -15,7 +14,7 @@ class BrowserSetup {
 
     async launchBrowser() {
         this.browser = await chromium.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-        this.context = await this.browser.newContext({ recordVideo: { dir: this.artefactManager.videosDir } });
+        this.context = await this.browser.newContext({ recordVideo: { dir: this.artefactManager.videosDirectory } });
         this.page = await this.context.newPage();
     }
 
@@ -35,12 +34,10 @@ setWorldConstructor(BrowserSetup);
 Before(async function ({ pickle }) {
     await this.launchBrowser();
     await this.startTracing();
-    // Registriere das Video am Anfang des Tests
-    this.artefactManager.registerVideo(this.page, pickle.name);
+    await this.artefactManager.registerVideo(this.page, pickle.name);
 });
 
 After(async function({ result, pickle }) {
-    // Behandle das Video am Ende des Tests basierend auf dem Ergebnis
     await this.artefactManager.handleVideoForFailedTest(result.status, pickle.name);
 
     if (result.status !== 'PASSED') {
