@@ -38,11 +38,6 @@ Before(async function ({ pickle }) {
 });
 
 After(async function({ result, pickle }) {
-    await this.artefactManager.handleVideoForFailedTest(result.status, pickle.name);
-
-    if (result.status !== 'PASSED') {
-        await this.artefactManager.saveScreenshot(this.page, pickle.name);
-        await this.artefactManager.saveTrace(this.context, pickle.name);
-    }
+    await this.artefactManager.handleTestArtifacts(result, pickle.name, this.page, this.context);
     await this.cleanupAfterTest();
 });

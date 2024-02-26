@@ -52,6 +52,24 @@ class ArtefactManager {
         }
         this.pendingVideos.delete(scenarioName);
     }
+
+    async handleTestArtifacts(result, scenarioName, page, context) {
+        if (result.status !== 'PASSED') {
+            await this.saveScreenshot(page, scenarioName);
+            await this.saveTrace(context, scenarioName);
+            await this.handleVideoForFailedTest(result.status, scenarioName);
+        } else {
+            await this.cleanupSuccessTestVideo(scenarioName);
+        }
+    }
+
+    async cleanupSuccessTestVideo(scenarioName) {
+        const videoPath = this.pendingVideos.get(scenarioName);
+        if (videoPath) {
+            await fs.unlink(videoPath).catch(e => console.error(`Error deleting video: ${e}`));
+            this.pendingVideos.delete(scenarioName);
+        }
+    }
 }
 
 module.exports = ArtefactManager;
