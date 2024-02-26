@@ -65,10 +65,11 @@ class ArtefactManager {
 
     async cleanupSuccessTestVideo(scenarioName) {
         const videoPath = this.pendingVideos.get(scenarioName);
-        if (videoPath) {
-            await fs.unlink(videoPath).catch(e => console.error(`Error deleting video: ${e}`));
-            this.pendingVideos.delete(scenarioName);
+        if (!videoPath) {
+            return;
         }
+        await fs.unlink(videoPath).catch(e => console.error(`Error deleting video: ${e}`));
+        this.pendingVideos.delete(scenarioName);
     }
 }
 
