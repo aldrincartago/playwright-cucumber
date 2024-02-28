@@ -1,6 +1,3 @@
-# Playwright Cucumber example project
-
-example frontend automation project with Playwright in JS with cucumber
 ### Prerequisites
 Before running this project, make sure you have Node.js and npm installed.
 Install the project dependencies:
