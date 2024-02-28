@@ -2,7 +2,7 @@ const {chromium} = require('@playwright/test');
 const {Before, After, setWorldConstructor, setDefaultTimeout} = require('@cucumber/cucumber');
 const ArtefactManager = require('./ArtefactManager');
 
-setDefaultTimeout(30 * 1000); // time out for every steps
+setDefaultTimeout(10 * 1000); // time out for every steps
 
 class BrowserSetup {
     constructor() {
@@ -13,7 +13,7 @@ class BrowserSetup {
     }
 
     async launchBrowser() {
-        this.browser = await chromium.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+        this.browser = await chromium.launch({ headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         this.context = await this.browser.newContext({ recordVideo: { dir: this.artefactManager.videosDirectory } });
         this.page = await this.context.newPage();
     }

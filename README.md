@@ -1,5 +1,4 @@
 # Playwright Cucumber example project
-![main](https://github.com/Jose-Luis-Nunez/playwright-cucumber/actions/workflows/run_tests.yml/badge.svg?branch=main)
 
 example frontend automation project with Playwright in JS with cucumber
 ### Prerequisites
